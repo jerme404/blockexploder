@@ -6,6 +6,9 @@ Vue.use(Router);
 export default new Router({
     mode: 'history',
     base: process.env.BASE_URL,
+    scrollBehavior (to, from, savedPosition) {
+        return { x: 0, y: 0 };
+    },
     routes: [
         {
             path: '/',
@@ -13,7 +16,7 @@ export default new Router({
             component: () => import('@/views/Explorer')
         },
         {
-            path: '/detail',
+            path: '/detail/:param?',
             name: 'detail',
             component: () => import('@/views/Detail')
         },
@@ -26,6 +29,10 @@ export default new Router({
             path: '/api',
             name: 'api',
             component: () => import('@/views/Api')
+        },
+        {
+            path: '*',
+            component: () => import('@/views/NotFound')
         }
     ]
 });

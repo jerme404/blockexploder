@@ -1,5 +1,5 @@
 <template>
-    <v-layout column class="secondary lighten-1">
+    <v-layout column class="primary lighten-1">
         <v-layout row wrap class="primary">
             <!-- Network stats -->
             <v-flex xs12 md4 class="px-2">
@@ -103,33 +103,74 @@
                 </v-layout>
             </v-flex>
         </v-layout>
+
         <search></search>
 
-        <v-layout row wrap>
+        <v-layout row wrap class="secondary lighten-1">
             <!-- Transaction Pool -->
-            <v-flex xs12 class="pt-5 pb-1 px-3 secondary lighten-1 no-select">
+            <v-flex xs12 class="pt-5 pb-1 px-3  no-select">
                 <v-layout column class="pa-3 secondary lighten-2 elevation-1">
-                    <v-layout row>
-                        <span class="body-2">Transaction Pool</span>
+                    <v-layout
+                        row
+                        align-center
+                        v-bind:class="{ 'pb-2 mb-1': txPoolList.length > 0 }">
+                        <v-icon
+                            color="primary lighten-2"
+                            size="16">
+                            fas fa-fw fa-exchange-alt
+                        </v-icon>
+                        <span class="px-2 subheading font-weight-bold primary--text text--lighten-2">
+                            {{ `Transaction Pool (${txPoolList.length})` }}
+                        </span>
+                    </v-layout>
+                    <v-layout
+                        row
+                        wrap
+                        v-if="txPoolList.length > 0 && !isMobile"
+                        class="pt-2 body-2">
+                        <v-flex xs12 md3 d-flex>
+                            <v-layout row>
+                                <span>Date/Time</span>
+                            </v-layout>
+                        </v-flex>
+                        <v-flex xs12 md7 d-flex>
+                            <v-layout row justify-start>
+                                <span>Tx Hash</span>
+                            </v-layout>
+                        </v-flex>
+                        <v-flex xs12 md2 d-flex>
+                            <v-layout row justify-end>
+                                <span>Fee</span>
+                                <v-spacer v-if="isMobile"></v-spacer>
+                            </v-layout>
+                        </v-flex>
                     </v-layout>
                     <v-layout
                         row
                         wrap
                         v-for="tx in txPoolList"
                         :key="tx.id_hash"
-                        class="pt-2 subheading">
-                        <v-flex xs2 d-flex>
+                        class="py-1 subheading"
+                        v-bind:class="{ 'py-2 row-dvdr': isMobile }">
+                        <v-flex xs12 md3 d-flex>
                             <v-layout row>
                                 <span>{{ tx.timeStamp }}</span>
                             </v-layout>
                         </v-flex>
-                        <v-flex xs8 d-flex>
-                            <v-layout row justify-center>
-                                <span class="font-mono">{{ tx.id_hash }}</span>
+                        <v-flex xs12 md7 d-flex>
+                            <v-layout row justify-start>
+                                <span class="font-mono hash-id">
+                                    {{ tx.id_hash }}
+                                    <!--<router-link
+                                        class="info--text text--darken-1"
+                                        :to="{ name: 'detail', params: { param: tx.id_hash }}">
+                                        {{ tx.id_hash }}
+                                    </router-link>-->
+                                </span>
                             </v-layout>
                         </v-flex>
-                        <v-flex xs2 d-flex>
-                            <v-layout row justify-end>
+                        <v-flex xs12 md2 d-flex>
+                            <v-layout row justify-end v-if="!isMobile">
                                 <span>{{ `${tx.txFee} ${config.coinSymbol}` }}</span>
                             </v-layout>
                         </v-flex>
@@ -140,36 +181,44 @@
             <!-- Block list -->
             <v-flex xs12 class="pa-3 secondary lighten-1 no-select">
                 <v-layout column class="pa-3 secondary lighten-2 elevation-1">
-                    <v-layout row>
-                        <span class="body-2">Recent Blocks</span>
+                    <v-layout row align-center class="pb-2 mb-1">
+                        <v-icon
+                            color="primary lighten-2"
+                            size="16">
+                            fas fa-fw fa-cube
+                        </v-icon>
+                        <span class="px-3 subheading font-weight-bold primary--text text--lighten-2">
+                            {{ `Recent Blocks (${recentBlockList.length})` }}
+                        </span>
                     </v-layout>
                     <v-layout
                         row
                         wrap
-                        class="pt-2 body-2">
+                        class="py-2 body-2"
+                        v-if="!isMobile">
                         <v-flex xs6 md1 d-flex>
                             <v-layout row>
-                                Height
+                                <span>Height</span>
                             </v-layout>
                         </v-flex>
                         <v-flex xs12 sm6 md3>
                             <v-layout row justify-start>
-                                Date/Time
+                                <span>Date/Time</span>
                             </v-layout>
                         </v-flex>
                         <v-flex xs12 md6>
                             <v-layout row justify-start>
-                                Block Hash
+                                <span>Block Hash</span>
                             </v-layout>
                         </v-flex>
                         <v-flex xs3 md1>
-                            <v-layout row justify-center>
-                                Size
+                            <v-layout row justify-end>
+                                <span>Block Size</span>
                             </v-layout>
                         </v-flex>
                         <v-flex xs1>
                             <v-layout row justify-end>
-                                Txs
+                                <span>TXes</span>
                             </v-layout>
                         </v-flex>
                     </v-layout>
@@ -178,29 +227,44 @@
                         wrap
                         v-for="block in recentBlockList"
                         :key="block.hash"
-                        class="pt-2 subheading">
-                        <v-flex xs6 md1 d-flex>
+                        class="py-1 subheading"
+                        v-bind:class="{ 'py-2 row-dvdr': isMobile }">
+                        <v-flex xs12 md1 d-flex>
                             <v-layout row>
                                 <span>{{ block.height }}</span>
+                                <v-spacer v-if="isMobile"></v-spacer>
+                                <span v-if="isMobile">
+                                    {{ `${block.timeStamp}` }}
+                                </span>
                             </v-layout>
                         </v-flex>
-                        <v-flex xs12 sm6 md3>
+                        <v-flex xs7 md3 v-if="!isMobile">
                             <v-layout row justify-start align-baseline>
-                                <span class="pr-2">{{ `${block.timeStamp}` }}</span>
-                                <span class="body-1">{{ `(${block.timeAgo})` }}</span>
+                                <span class="pr-2">
+                                    {{ `${block.timeStamp}` }}
+                                </span>
+                                <span class="body-1">
+                                    {{ `(${block.timeAgo})` }}
+                                </span>
                             </v-layout>
                         </v-flex>
                         <v-flex xs12 md6>
                             <v-layout row justify-start>
-                                <span class="font-mono text-truncate">{{ block.hash }}</span>
+                                <span class="font-mono hash-id">
+                                    <router-link
+                                        class="info--text text--darken-1"
+                                        :to="{ name: 'detail', params: { param: block.hash }}">
+                                        {{ block.hash }}
+                                    </router-link>
+                                </span>
                             </v-layout>
                         </v-flex>
-                        <v-flex xs3 md1>
+                        <v-flex xs3 md1 v-if="!isMobile">
                             <v-layout row justify-end>
                                 <span>{{ block.blockSize }}</span>
                             </v-layout>
                         </v-flex>
-                        <v-flex xs3 md1>
+                        <v-flex xs3 md1 v-if="!isMobile">
                             <v-layout row justify-end>
                                 <span>{{ block.num_txes }}</span>
                             </v-layout>
@@ -345,13 +409,20 @@ export default {
             this.netChartOptions.series = this.blockChartData.series;
             this.netChartOptions.xaxis.categories = this.blockChartData.xAxis.categories;
             this.blockChart.updateOptions(this.netChartOptions, false);
-
         }
 
     },
     mounted () {
 
         this.setBlockChart();
+    },
+    beforeDestroy () {
+
+        if (this.blockChart) {
+
+            this.blockChart.destroy();
+            this.blockChart = undefined;
+        }
     }
 };
 </script>
@@ -362,5 +433,8 @@ export default {
     max-width: 100%;
     display: inline-block;
     box-sizing: border-box;
+}
+.row-dvdr {
+    box-shadow: 0px 1px 0px rgba(102,102,102,0.1) inset;
 }
 </style>

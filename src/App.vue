@@ -8,7 +8,10 @@
             <nav-top></nav-top>
         </v-toolbar>
         <v-content>
-            <v-container fluid fill-height class="pa-0 primary darken-1">
+            <v-container
+                fluid
+                fill-height
+                class="pa-0 primary darken-1">
                 <router-view></router-view>
             </v-container>
         </v-content>
@@ -82,5 +85,15 @@ body {
 }
 .cursor-default {
     cursor: default;
+}
+.hash-id {
+    overflow: hidden!important;
+    text-overflow: ellipsis!important;
+}
+.hash-id a {
+    text-decoration: none !important;
+}
+.nerva-gradient {
+    background-image: linear-gradient( 135deg, rgba(85, 168, 191, 1) 0%, rgba(99, 88, 145, 1) 100%);
 }
 </style>

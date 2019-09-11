@@ -27,7 +27,7 @@ const actions = {
 
             // Check if tx pool size or height changed.
             let heightChanged = state.networkInfo.height != networkInfo.height;
-            let txPoolChanged = state.networkInfo.tx_pool_size != networkInfo.tx_pool_size;
+            let txPoolChanged = heightChanged || state.networkInfo.tx_pool_size != networkInfo.tx_pool_size;
 
             if (heightChanged) {
 
@@ -81,7 +81,6 @@ const actions = {
 
         return state.explorerService.getTxPool().then((txPool) => {
 
-            console.log('got tx pool', txPool);
             commit('setTxPool', txPool.transactions || []);
         }).catch((err) => {
 

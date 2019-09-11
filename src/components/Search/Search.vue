@@ -1,5 +1,5 @@
 <template>
-    <v-layout row shrink class="mb-3 primary">
+    <v-layout row shrink class="primary">
         <v-flex xs12 md8 offset-md2 d-flex>
             <v-layout
                 row
@@ -35,9 +35,6 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-import store from '@/store';
-
 export default {
     name: 'search',
     components: {},
@@ -54,9 +51,6 @@ export default {
         }
     },
     methods: {
-        ...mapActions({
-
-        }),
         clearSearchText () {
 
             this.searchText = '';
@@ -68,6 +62,7 @@ export default {
 
                 return;
             }
+            this.$router.push(`/detail/${this.searchText}`);
         }
     }
 };
@@ -85,7 +80,6 @@ export default {
 .search-input {
     font-size: 16px;
     font-weight: 500;
-
     border: 0;
     outline: none;
     padding: 12px;

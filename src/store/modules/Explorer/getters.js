@@ -1,4 +1,5 @@
 import Config from '@/config';
+import Utils from '@/utils';
 import moment from 'moment';
 
 const getters = {
@@ -19,12 +20,12 @@ const getters = {
         if (state.recentBlocks && state.recentBlocks.length > 0) {
 
             let reward = state.recentBlocks[state.recentBlocks.length - 1].reward;
-            supply.reward = decimalUnits(reward);
+            supply.reward = Utils.decimalUnits(reward);
         }
 
         if (state.generatedCoins) {
 
-            supply.circulating = decimalUnits(state.generatedCoins);
+            supply.circulating = Utils.decimalUnits(state.generatedCoins);
             supply.emissionPercent = (state.generatedCoins / Config.coinSupplyTotal) * 100;
         }
         return supply;
@@ -41,10 +42,8 @@ const getters = {
 
         if (state.networkInfo.difficulty) {
 
-            netStats.difficulty = displayUnits(state.networkInfo.difficulty, 2);
-
-            let netHash = displayUnits(state.networkInfo.difficulty/Config.blockTarget, 2);
-            netStats.hashrate = `${netHash}H/s`;
+            netStats.difficulty = Utils.displayUnits(state.networkInfo.difficulty, 2);
+            netStats.hashrate = Utils.hashrate(state.networkInfo.difficulty);
         }
 
         return netStats;
@@ -78,7 +77,7 @@ const getters = {
 
             let timeStamp = moment.unix(block.timestamp);
             return Object.assign({
-                blockSize: `${displayUnits(block.block_size, block.block_size >= 1000 ? 2 : 0)}B`,
+                blockSize: `${Utils.blockSize(block.block_size)}B`,
                 timeAgo: timeStamp.fromNow(),
                 timeStamp: timeStamp.format('L LT'),
             }, block);
@@ -96,7 +95,7 @@ const getters = {
         let txPool = [...state.txPool].map((tx) => {
 
             return Object.assign({
-                txFee: decimalUnits(tx.fee).toFixed(Config.coinUnitPlaces),
+                txFee: Utils.decimalUnits(tx.fee).toFixed(Config.coinUnitPlaces),
                 timeStamp: moment.unix(tx.receive_time).format('L LT'),
             }, tx);
         });
@@ -169,25 +168,3 @@ const getters = {
 };
 
 export default getters;
-
-const decimalUnits = function (numIn) {
-
-    let divisor = Math.pow(10, Config.coinUnitPlaces);
-    return numIn / divisor;
-};
-
-const displayUnits = function (input, decimals) {
-
-    let units = ['k', 'M', 'G', 'T', 'P', 'E'],
-        unit = '',
-        unitIndex = 0;
-
-    while (input > 1000) {
-
-        unit = units[unitIndex];
-        input = input/1000;
-        unitIndex++;
-    }
-
-    return `${input.toFixed(decimals || 0)} ${unit}`;
-};
