@@ -160,12 +160,11 @@
                         <v-flex xs12 md7 d-flex>
                             <v-layout row justify-start>
                                 <span class="font-mono hash-id">
-                                    {{ tx.id_hash }}
-                                    <!--<router-link
+                                    <router-link
                                         class="info--text text--darken-1"
                                         :to="{ name: 'detail', params: { param: tx.id_hash }}">
                                         {{ tx.id_hash }}
-                                    </router-link>-->
+                                    </router-link>
                                 </span>
                             </v-layout>
                         </v-flex>
@@ -292,7 +291,6 @@ export default {
     data () {
         return {
             config: Config,
-            blockChart: undefined,
             netChartOptions: {
                 dataLabels: {
                     enabled: false

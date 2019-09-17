@@ -142,36 +142,38 @@
             <v-layout
                 column
                 class="py-3"
-                v-else-if="block">
-                <v-layout
-                    row
-                    class="px-3 pb-3"
-                    align-center>
-                    <v-icon
-                        color="accent"
-                        size="20">
-                        fas fa-fw fa-cube
-                    </v-icon>
-                    <span class="px-3 title accent--text">
-                        Block
-                    </span>
-                </v-layout>
-                <v-flex xs12 class="px-3 pb-2">
-                    <v-layout row>
-                        <span class="pr-3 subheading font-weight-bold">
-                            Hash
-                        </span>
-                        <span class="subheading hash-id">
-                            <router-link
-                                class="info--text text--darken-1"
-                                :to="{ name: 'detail', params: { param: block.hash }}">
-                                {{ block.hash }}
-                            </router-link>
+                v-else-if="tx">
+                <v-layout column v-if="block">
+                    <v-layout
+                        row
+                        class="px-3 pb-3"
+                        align-center>
+                        <v-icon
+                            color="accent"
+                            size="20">
+                            fas fa-fw fa-cube
+                        </v-icon>
+                        <span class="px-3 title accent--text">
+                            Block
                         </span>
                     </v-layout>
-                </v-flex>
-                <block-display :block="block">
-                </block-display>
+                    <v-flex xs12 class="px-3 pb-2">
+                        <v-layout row>
+                            <span class="pr-3 subheading font-weight-bold">
+                                Hash
+                            </span>
+                            <span class="subheading hash-id">
+                                <router-link
+                                    class="info--text text--darken-1"
+                                    :to="{ name: 'detail', params: { param: block.hash }}">
+                                    {{ block.hash }}
+                                </router-link>
+                            </span>
+                        </v-layout>
+                    </v-flex>
+                    <block-display :block="block">
+                    </block-display>
+                </v-layout>
                 <!-- Inputs -->
                 <v-layout column v-if="tx && block && tx.hash != block.miner_tx_hash">
                     <v-layout
@@ -341,6 +343,10 @@ export default {
 
                 return;
             }
+            if (this.txResult.in_pool) {
+
+                return 'Unconfirmed';
+            }
             return this.networkInfo.height - this.txResult.block_height;
         }
     },
@@ -396,7 +402,11 @@ export default {
                     this.$nextTick(() => {
                         this.txResult = txResult;
                     });
-                    
+
+                    if (txResult.in_pool) {
+
+                        return Promise.resolve();
+                    }
                     return this.explorerService.getBlockHash(txResult.block_height);
                 }
                 return Promise.reject('Tx not found');
