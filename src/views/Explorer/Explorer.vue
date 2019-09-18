@@ -1,6 +1,6 @@
 <template>
     <v-layout column class="primary lighten-1">
-        <v-layout row wrap class="primary">
+        <v-layout row wrap shrink class="primary">
             <!-- Network stats -->
             <v-flex xs12 md4 class="px-2">
                 <v-layout
@@ -106,9 +106,9 @@
 
         <search></search>
 
-        <v-layout row wrap class="secondary lighten-1">
+        <v-layout column shrink class="secondary lighten-1">
             <!-- Transaction Pool -->
-            <v-flex xs12 class="pt-5 pb-1 px-3  no-select">
+            <v-flex xs12 class="pt-5 pb-1 px-3 no-select">
                 <v-layout column class="pa-3 secondary lighten-2 elevation-1">
                     <v-layout
                         row
@@ -148,6 +148,7 @@
                     <v-layout
                         row
                         wrap
+                        v-if="txPoolList.length > 0"
                         v-for="tx in txPoolList"
                         :key="tx.id_hash"
                         class="py-1 subheading"
