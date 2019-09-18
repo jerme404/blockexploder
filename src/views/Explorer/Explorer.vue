@@ -148,7 +148,6 @@
                     <v-layout
                         row
                         wrap
-                        v-if="txPoolList.length > 0"
                         v-for="tx in txPoolList"
                         :key="tx.id_hash"
                         class="py-1 subheading"
