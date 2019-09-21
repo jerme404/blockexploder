@@ -106,7 +106,7 @@
 
         <search></search>
 
-        <v-layout column shrink class="secondary lighten-1">
+        <v-layout column class="secondary lighten-1">
             <!-- Transaction Pool -->
             <v-flex xs12 class="pt-5 pb-1 px-3 no-select">
                 <v-layout column class="pa-3 secondary lighten-2 elevation-1">
@@ -391,7 +391,7 @@ export default {
 
             if (!this.blockChart) {
 
-                this.netChartOptions.chart.height = this.isMobile ? 150 : 300;
+                this.netChartOptions.chart.height = this.isMobile ? 200 : 300;
                 this.netChartOptions.stroke.width = this.isMobile ? 1 : 3;
 
                 this.blockChart = new ApexCharts(document.getElementById('netChart'), this.netChartOptions);

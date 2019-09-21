@@ -19,12 +19,12 @@
                     <router-link to="/" class="px-2 mx-2 py-2 nav-link" exact>
                         <span>Explorer</span>
                     </router-link>
-                    <router-link to="/tools" class="px-2 mx-2 py-2 nav-link" exact>
+                    <!--<router-link to="/tools" class="px-2 mx-2 py-2 nav-link" exact>
                         <span>Tools</span>
                     </router-link>
                     <router-link to="/api" class="px-2 ml-2 py-2 nav-link" exact>
                         <span>API</span>
-                    </router-link>
+                    </router-link>-->
                 </v-layout>
             </v-layout>
         </v-flex>

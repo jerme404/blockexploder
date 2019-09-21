@@ -1,10 +1,11 @@
 <template>
-    <v-layout row wrap>
+    <v-layout row wrap class="primary">
+        <v-flex xs12>
 
-        <v-layout row class="primary">
-            <span>exploder detail</span>
-        </v-layout>
-
+            <v-layout row class="pa-3">
+                <span>Tools</span>
+            </v-layout>
+        </v-flex>
     </v-layout>
 
 </template>
