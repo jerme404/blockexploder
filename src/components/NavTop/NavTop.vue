@@ -15,14 +15,14 @@
                     row
                     align-center
                     justify-end
-                    v-bind:class="{ 'px-3': !isMobile }">
-                    <router-link to="/" class="px-2 mx-2 py-2 nav-link" exact>
+                    v-bind:class="{ 'px-2': !isMobile }">
+                    <router-link to="/" class="px-1 ml-2 py-2 nav-link" exact>
                         <span>Explorer</span>
                     </router-link>
-                    <!--<router-link to="/tools" class="px-2 mx-2 py-2 nav-link" exact>
+                    <!--<router-link to="/tools" class="px-1 ml-2 py-2 nav-link" exact>
                         <span>Tools</span>
                     </router-link>
-                    <router-link to="/api" class="px-2 ml-2 py-2 nav-link" exact>
+                    <router-link to="/api" class="px-1 ml-2 py-2 nav-link" exact>
                         <span>API</span>
                     </router-link>-->
                 </v-layout>

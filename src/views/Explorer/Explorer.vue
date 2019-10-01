@@ -93,12 +93,11 @@
             <v-flex
                 xs12
                 md8
-                class="px-2 primary"
-                v-bind:class="{ 'px-3': !isMobile }">
+                class="pt-1 primary"
+                v-bind:class="{ 'px-1 pl-3': !isMobile, 'pt-2': isMobile }">
                 <v-layout
                     column
-                    class="py-2"
-                    v-bind:class="{ 'px-3': !isMobile }">
+                    class="pl-2">
                     <div id="netChart"></div>
                 </v-layout>
             </v-flex>
@@ -148,8 +147,8 @@
                     <v-layout
                         row
                         wrap
-                        v-for="tx in txPoolList"
-                        :key="tx.id_hash"
+                        v-for="(tx, index) in txPoolList"
+                        :key="index"
                         class="py-1 subheading"
                         v-bind:class="{ 'py-2 row-dvdr': isMobile }">
                         <v-flex xs12 md3 d-flex>
