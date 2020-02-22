@@ -211,7 +211,7 @@
                     <v-layout
                         row
                         wrap
-                        class="py-1 px-3 subheading"
+                        class="pb-1 px-3 subheading"
                         align-center
                         v-for="input in tx.vin"
                         :key="input.key.k_image">
@@ -256,7 +256,7 @@
                     <v-layout
                         row
                         wrap
-                        class="px-3"
+                        class="pb-1 px-3 subheading"
                         v-for="output in tx.vout"
                         :key="output.target.key">
                         <span class="font-mono hash-id">

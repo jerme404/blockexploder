@@ -5,7 +5,7 @@
                 <a :href="config.websiteUrl" rel="nofollow" target="_blank">
                     <img
                         align="middle"
-                        src="@/assets/logo-color.png"
+                        src="@/assets/nerva-explorer.png"
                         alt="Logo"
                         class="nav-logo"
                         v-bind:class="{ 'nav-logo-mobile': isMobile }">
